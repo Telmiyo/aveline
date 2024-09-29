@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import tailwindAnimated from 'tailwindcss-animated';
 import dashboardTheme from './src/renderer/themes/dashboard';
-import editorTheme from './src/renderer/themes/editor';
+import readerTheme from './src/renderer/themes/reader';
 /* eslint-enable @typescript-eslint/no-var-requires */
 
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
       },
       colors: {
         ...dashboardTheme.extend.colors,
-        ...editorTheme.extend.colors,
+        ...readerTheme.extend.colors,
       },
     },
   },

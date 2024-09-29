@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Reader from '../components/reader/Reader';
 import Toolbox from '../components/toolbox/Toolbox';
 
-function EditorLayout() {
+function ReaderLayout() {
   const [toc, setToc] = useState<any[]>([]);
 
   const handleTocChanged = (newToc: any[]) => {
@@ -20,4 +20,4 @@ function EditorLayout() {
   );
 }
 
-export default EditorLayout;
+export default ReaderLayout;

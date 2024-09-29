@@ -7,20 +7,6 @@ const quote = `"The silence often of pure innocence persuades when speaking fail
 — William Shakespeare, The Winter's Tale`;
 
 function Home() {
-  const navigate = useNavigate();
-
-  function createBook() {
-    window.electron.ipcRenderer.once('save-book', () => {
-      // TODO: fix navigation routing backwards
-      navigate('../../editor/');
-    });
-    window.electron.ipcRenderer.sendMessage(
-      'save-book',
-      'example.txt',
-      'This is the content of the file now.',
-    );
-  }
-
   return (
     <div className="w-full h-full flex flex-col justify-center items-center">
       {/* Header */}
@@ -37,13 +23,6 @@ function Home() {
               {quote}
             </blockquote>
           </div>
-          <button
-            type="button"
-            className="dashboard-button-primary mt-8"
-            onClick={createBook}
-          >
-            open book
-          </button>
         </div>
       </div>
       {/* User Home */}

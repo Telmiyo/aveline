@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
-import Editor from '../modules/editor/editor';
+import Reader from '../modules/reader/reader';
 
 const Dashboard = lazy(() => import('../modules/dashboard/dashboard'));
 const Home = lazy(() => import('../modules/dashboard/views/Home'));
@@ -24,8 +24,8 @@ const routes = [
     ],
   },
   {
-    path: '/editor',
-    element: <Editor />,
+    path: '/reader',
+    element: <Reader />,
   },
 ];
 

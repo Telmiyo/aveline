@@ -23,8 +23,8 @@ Commit messages should follow the [Conventional Commits](https://www.conventiona
 
 The scope is optional and indicates the part of the project affected by the commit. For example:
 
-- **app**: Changes related to the application part.
-- **editor**: Changes related to the editor package.
+- **desktop**: Changes related to the desktop app.
+- **mobile**: Changes related to the mobile app.
 
 ### Description
 
@@ -35,6 +35,6 @@ The description should be a short and clear summary of the change. Use the imper
 Here are some examples of well-formatted commit messages:
 
 - `feat: initialize project setup and design initial homepage layout`
-- `feat(editor): setup local npm package for editor`
+- `feat(desktop): setup local npm package for editor`
 - `docs: update README with development workflow`
-- `fix(app): resolve issue with user authentication`
+- `fix(mobile): resolve issue with user authentication`
