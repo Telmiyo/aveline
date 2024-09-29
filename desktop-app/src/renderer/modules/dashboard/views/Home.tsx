@@ -28,10 +28,6 @@ function Home() {
       {/* User Home */}
       <div className="flex flex-col justify-center items-center">
         <div className="w-fit grid grid-cols-4 gap-8">
-          <Book coverColor="jasper" />
-          <Book coverColor="bronze" />
-          <Book coverColor="satinSheenGold" />
-          <Book coverColor="glaucous" />
         </div>
       </div>
     </div>

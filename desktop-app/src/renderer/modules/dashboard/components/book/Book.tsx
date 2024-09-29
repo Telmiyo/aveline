@@ -11,23 +11,17 @@ const colors = {
 type ColorKey = keyof typeof colors;
 
 interface BookProperties {
-  coverColor: ColorKey;
+  cover: string;
 }
 
-export default function Book({ coverColor }: BookProperties) {
+export default function Book({ cover }: BookProperties) {
   // Get the color value from the colors object
-  const backgroundColor = colors[coverColor];
-
   return (
     <div
-      className="relative transform w-28 h-40 rounded overflow-hidden shadow-xl"
-      style={{ backgroundColor }}
+      className="cursor-pointer relative transform w-44 h-72 rounded overflow-hidden shadow-2xl bg-cover bg-center"
+      style={{ backgroundImage: `url(${cover})` }}
     >
       <div className="absolute top-0 left-0 w-0.5 h-full bg-white bg-opacity-10 border-r-2 border-l-2 border-black" />
-      <div className="relative z-10 p-4 h-full">
-        <h2 className="text-black">Book Title</h2>
-        <p className="text-black">Author Name</p>
-      </div>
     </div>
   );
 }
