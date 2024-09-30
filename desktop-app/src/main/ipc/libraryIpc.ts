@@ -1,7 +1,7 @@
 import { ipcMain, dialog } from 'electron';
-import { getUserDataPath, getUserBookList } from './util';
 import path from 'path';
 import fs from 'fs';
+import { getUserDataPath, getUserBookList } from '../util';
 
 ipcMain.handle('get-library', async () => {
   const libraryPath = getUserDataPath('library');
@@ -28,14 +28,13 @@ ipcMain.handle('get-library', async () => {
 ipcMain.handle('open-file-dialog', async () => {
   const result = await dialog.showOpenDialog({
     properties: ['openFile', 'multiSelections'],
-    filters: [{ name: 'EPUB Files', extensions: ['epub'] }]
+    filters: [{ name: 'EPUB Files', extensions: ['epub'] }],
   });
   return result.filePaths;
 });
 ipcMain.on('add-book', async (event, filePath) => {
   const libraryPath = getUserDataPath('library');
   const fileName = path.basename(filePath);
-  console.log(fileName)
   const destinationPath = path.join(libraryPath, fileName);
 
   try {
@@ -47,4 +46,3 @@ ipcMain.on('add-book', async (event, filePath) => {
     throw new Error('Error creating file');
   }
 });
-
