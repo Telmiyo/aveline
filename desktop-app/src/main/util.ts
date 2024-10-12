@@ -14,14 +14,46 @@ export function resolveHtmlPath(htmlFileName: string) {
   return `file://${path.resolve(__dirname, '../renderer/', htmlFileName)}`;
 }
 
-function extractEpubCover(epubFilePath: string): string {
+function searchFile(directory: string, fileName: string): string | null {
+  // read the contents of the directory
+  const files = fs.readdirSync(directory);
+
+  // search through the files
+  // eslint-disable-next-line no-restricted-syntax
+  for (const file of files) {
+    // build the full path of the file
+    const filePath = path.join(directory, file);
+
+    // get the file stats
+    const fileStat = fs.statSync(filePath);
+
+    // if the file is a directory, recursively search the directory
+    if (fileStat.isDirectory()) {
+      const found: string | null = searchFile(filePath, fileName);
+      if (found) return found;
+    } else if (file === fileName) {
+      // if the file is a match, print it
+      return filePath;
+    }
+  }
+  return null;
+}
+
+/**
+ * Extracts the cover image from an EPUB file and returns it as a base64 encoded string.
+ *
+ * @param epubFilePath - The file path to the EPUB file from which the cover image is to be extracted.
+ * @returns A base64 encoded string of the cover image if found, otherwise null.
+ */
+export function extractEpubCover(epubFilePath: string): string {
   // Copy the epub to a temporary file to manage it
-  const epubBuffer = fs.readFileSync(epubFilePath);
+  // eslint-disable-next-line global-require
   const { v4: uuidv4 } = require('uuid');
-  const tempDir = path.join(app.getPath('userData'), `temp_${uuidv4()}`);
+  const tempDir = path.join(app.getPath('temp'), `temp_${uuidv4()}`);
   fs.mkdirSync(tempDir, { recursive: true });
 
   const tempEpubPath = path.join(tempDir, 'temp.epub');
+  const epubBuffer = fs.readFileSync(epubFilePath);
   fs.writeFileSync(tempEpubPath, epubBuffer);
 
   // eslint-disable-next-line global-require
@@ -29,21 +61,16 @@ function extractEpubCover(epubFilePath: string): string {
   return extract(tempEpubPath, { dir: tempDir })
     .then(() => {
       // Find the cover image
-      const oebpsFolder = path.join(tempDir, 'OEBPS/Images');
-      const coverImageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-      const coverImagePath = coverImageExtensions
-        .map((ext) =>
-          fs
-            .readdirSync(oebpsFolder)
-            .find((file) => file.toLowerCase().endsWith(`cover.${ext}`)),
-        )
-        .find((image) => image);
+      const coverImagePath =
+        searchFile(tempDir, 'cover.jpg') ||
+        searchFile(tempDir, 'cover.jpeg') ||
+        searchFile(tempDir, 'cover.png') ||
+        searchFile(tempDir, 'cover.html');
 
       // Change into base 64 format
       let base64Image = null;
       if (coverImagePath) {
-        const fullPath = path.join(oebpsFolder, coverImagePath);
-        const imageBuffer = fs.readFileSync(fullPath);
+        const imageBuffer = fs.readFileSync(coverImagePath);
         const imageExtension = coverImagePath.split('.').pop();
 
         base64Image = imageBuffer.toString('base64');
@@ -70,31 +97,24 @@ interface UserBookListInterface {
 export async function getUserBookList(
   filePaths: string[],
 ): Promise<UserBookListInterface[]> {
-  try {
-    const userBookList = await Promise.all(
-      filePaths.map(async (filePath) => {
-        try {
-          const cover = await extractEpubCover(filePath);
-          return { cover, filePath };
-        } catch (error) {
-          console.error(`Error extracting cover for ${filePath}:`, error);
-          return { cover: '', filePath };
-        }
-      }),
-    );
+  const userBookList = await Promise.all(
+    filePaths.map(async (filePath) => {
+      let cover = await extractEpubCover(filePath);
+      if (!cover) {
+        cover = '';
+      }
+      return { cover, filePath };
+    }),
+  );
 
-    return userBookList.filter((book) => book.cover);
-  } catch (error) {
-    console.error('Error fetching user book list:', error);
-    throw error;
-  }
+  return userBookList.filter((book) => book.cover);
 }
 
 interface userDataPaths {
   baseDir: '';
   library: 'library';
 }
-export function getUserDataPath(dataPath: keyof userDataPaths): string {
+export function getAvelineDataPath(dataPath: keyof userDataPaths): string {
   const appDataPath = app.getPath('userData');
   return path.join(appDataPath, dataPath);
 }

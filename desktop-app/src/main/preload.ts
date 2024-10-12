@@ -2,7 +2,11 @@
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-export type Channels = 'add-book' | 'get-library' | 'open-file-dialog';
+export type Channels =
+  | 'add-book'
+  | 'add-book-error'
+  | 'get-library'
+  | 'open-file-dialog';
 
 const electronHandler = {
   ipcRenderer: {
