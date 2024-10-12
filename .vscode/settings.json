@@ -1,0 +1,25 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.autoIndent": "full",
+  "editor.cursorBlinking": "blink",
+  "editor.fontSize": 14,
+  "editor.tabSize": 2,
+  "editor.bracketPairColorization.enabled": true, // Helps with braces management
+  "editor.fontLigatures": true,
+  "editor.formatOnSave": true,
+  "editor.minimap.enabled": false,
+  "editor.trimAutoWhitespace": false, // Keeps indentation after braces
+
+  "diffEditor.ignoreTrimWhitespace": false,
+
+  "window.newWindowProfile": "Default",
+  "window.customTitleBarVisibility": "auto",
+  "window.commandCenter": false,
+
+  "workbench.colorTheme": "ZED One Theme Dark",
+  "workbench.iconTheme": "gruvbox-material-icon-theme",
+  "workbench.activityBar.location": "bottom",
+  "workbench.layoutControl.enabled": false,
+
+  "tabnine.experimentalAutoImports": true
+}

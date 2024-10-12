@@ -1,0 +1,20 @@
+{
+  "recommendations": [
+    "formulahendry.auto-rename-tag", // Auto Rename Tag
+    "alexisvt.project-manager", // Project Manager
+    "vivaxy.vscode-conventional-commits", // Back & Forth
+    "firas.nerdfont", // Fira Code Nerd Font
+    "qwtel.sidebar-function-list", // Sidebar Function List
+    "gruvbox-community.material-icon-theme", // Gruvbox Material Icon Theme
+    "akamud.vscode-theme-onedark", // Zed One Theme (or similar)
+    "shardulm94.trailing-spaces", // Trailing Spaces
+    "Gruntfuggly.extra-align", // Extra
+
+    // Development tools
+    "eamodio.gitlens", // GitLens
+    "ms-azuretools.vscode-docker", // Docker
+    "esbenp.prettier-vscode", // Prettier
+    "dbaeumer.vscode-eslint", // ESLint
+    "TablineAI.vscode-tabline-ai" // Tabline AI
+  ]
+}
