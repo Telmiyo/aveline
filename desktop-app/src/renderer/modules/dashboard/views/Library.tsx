@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Suspense, lazy } from 'react';
+import React, { useEffect, useState, Suspense, lazy, useMemo } from 'react';
 import { CiSquarePlus } from 'react-icons/ci';
 import HeaderLayout from '../layouts/HeaderLayout';
 
@@ -51,7 +51,7 @@ function Library() {
     }
   };
 
-  const renderContent = () => {
+  const renderContent = useMemo(() => {
     if (loading) {
       return (
         <div
@@ -69,9 +69,8 @@ function Library() {
       return (
         <Suspense fallback={<div>Loading books...</div>}>
           {library.map((book: BookProps) => (
-            <div>
+            <div key={`${book.title} + ${book.author}`}>
               <Book
-                key={`${book.title} + ${book.author}`}
                 cover={book.cover}
                 title={book.title}
                 filePath={book.filePath}
@@ -83,7 +82,7 @@ function Library() {
     }
 
     return <p>No books in your library.</p>;
-  };
+  }, [loading, library]);
 
   return (
     <HeaderLayout title="All Library">
@@ -92,8 +91,8 @@ function Library() {
         className="absolute cursor-pointer right-8 top-8"
         onClick={AddBookToLibrary}
       />
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7 gap-y-8 items-center ">
-        {renderContent()}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7 gap-y-8 items-center">
+        {renderContent}
       </div>
     </HeaderLayout>
   );
