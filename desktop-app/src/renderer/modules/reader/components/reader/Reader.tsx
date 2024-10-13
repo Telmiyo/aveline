@@ -3,10 +3,11 @@ import { ReactReader } from 'react-reader';
 import { ReaderManager, ITheme } from './ReaderManager';
 
 interface ReaderProps {
+  fileURL: string;
   onTocChanged: (toc: any[]) => void;
 }
 
-export default function Reader({ onTocChanged }: ReaderProps) {
+export default function Reader({ fileURL, onTocChanged }: ReaderProps) {
   const [location, setLocation] = useState<string | number>(0);
   const [theme, setTheme] = useState<ITheme>('light');
   const readerManager = new ReaderManager();
@@ -17,7 +18,7 @@ export default function Reader({ onTocChanged }: ReaderProps) {
 
   return (
     <ReactReader
-      url="https://react-reader.metabits.no/files/alice.epub"
+      url={fileURL}
       location={location}
       locationChanged={(epubcfi: string) => setLocation(epubcfi)}
       readerStyles={readerManager.getTheme(theme)}

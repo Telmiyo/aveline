@@ -14,7 +14,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import './ipc/services';
+import { stopCurrentServer } from './ipc/services';
 
 class AppUpdater {
   constructor() {
@@ -91,6 +91,10 @@ const createWindow = async () => {
     }
   });
 
+  app.on('before-quit', () => {
+    stopCurrentServer();
+  });
+
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
@@ -117,6 +121,7 @@ app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
   if (process.platform !== 'darwin') {
+    stopCurrentServer();
     app.quit();
   }
 });

@@ -89,7 +89,7 @@ export function extractEpubCover(epubFilePath: string): string {
     });
 }
 
-interface UserBookListInterface {
+interface IUserBookList {
   title: string;
   author: string;
   cover: string;
@@ -98,14 +98,14 @@ interface UserBookListInterface {
 
 export async function getUserBookList(
   filePaths: string[],
-): Promise<UserBookListInterface[]> {
-  const bookList: UserBookListInterface[] = await Promise.all(
+): Promise<IUserBookList[]> {
+  const bookList: IUserBookList[] = await Promise.all(
     filePaths.map(async (filePath) => {
       // Read the file asynchronously
       const jsonString = await fs.promises.readFile(filePath, 'utf-8');
 
       // Parse the JSON string into an object
-      const book: UserBookListInterface = JSON.parse(jsonString);
+      const book: IUserBookList = JSON.parse(jsonString);
 
       return book;
     }),
@@ -114,11 +114,11 @@ export async function getUserBookList(
   return bookList;
 }
 
-interface userDataPaths {
+interface IUserDataPaths {
   baseDir: '';
   library: 'library';
 }
-export function getAvelineDataPath(dataPath: keyof userDataPaths): string {
+export function getAvelineDataPath(dataPath: keyof IUserDataPaths): string {
   const appDataPath = app.getPath('userData');
   return path.join(appDataPath, dataPath);
 }

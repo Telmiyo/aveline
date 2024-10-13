@@ -74,6 +74,7 @@ function Library() {
                 key={`${book.title} + ${book.author}`}
                 cover={book.cover}
                 title={book.title}
+                filePath={book.filePath}
               />
             </div>
           ))}

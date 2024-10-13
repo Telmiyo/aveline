@@ -7,7 +7,9 @@ export type Channels =
   | 'add-book-success'
   | 'add-book-error'
   | 'get-library'
-  | 'open-file-dialog';
+  | 'open-file-dialog'
+  | 'start-server'
+  | 'stop-server';
 
 const electronHandler = {
   ipcRenderer: {

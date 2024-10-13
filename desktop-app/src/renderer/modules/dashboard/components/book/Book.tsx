@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface BookProperties {
   cover: string;
   title: string;
+  filePath: string;
 }
 
 const colors = {
@@ -14,7 +16,8 @@ const colors = {
   satinSheenGold: '#A59132',
 } as const;
 
-export default function Book({ cover, title }: BookProperties) {
+export default function Book({ cover, title, filePath }: BookProperties) {
+  const navigate = useNavigate();
   const [isCoverValid, setIsCoverValid] = useState<boolean>(true);
 
   const getRandomColor = () => {
@@ -45,9 +48,13 @@ export default function Book({ cover, title }: BookProperties) {
   }, [cover]);
 
   return (
-    <div className="w-44">
+    <button
+      type="button"
+      className="w-44"
+      onClick={() => navigate(`/reader/${encodeURIComponent(filePath)}`)}
+    >
       <div
-        className="cursor-pointer relative transform w-44 h-72 rounded overflow-hidden shadow-2xl bg-cover bg-center flex items-center justify-cente"
+        className="relative transform w-44 h-72 rounded overflow-hidden shadow-2xl bg-cover bg-center flex items-center justify-cente"
         style={backgroundStyle}
       >
         <div
@@ -60,6 +67,6 @@ export default function Book({ cover, title }: BookProperties) {
         <div className="absolute top-0 left-0 w-0.5 h-full bg-white bg-opacity-10 border-r-2 border-l-2 border-black" />
       </div>
       <div className="w-44 overflow-hidden text-ellipsis whitespace-nowrap mt-2" />
-    </div>
+    </button>
   );
 }
