@@ -5,9 +5,14 @@ import { ReaderManager, ITheme } from './ReaderManager';
 interface ReaderProps {
   fileURL: string;
   onTocChanged: (toc: any[]) => void;
+  onNavigateTo: (navigateTo: (href: string) => void) => void;
 }
 
-export default function Reader({ fileURL, onTocChanged }: ReaderProps) {
+export default function Reader({
+  fileURL,
+  onTocChanged,
+  onNavigateTo,
+}: ReaderProps) {
   const [location, setLocation] = useState<string | number>(0);
   const [theme, setTheme] = useState<ITheme>('light');
   const readerManager = new ReaderManager();
@@ -24,9 +29,12 @@ export default function Reader({ fileURL, onTocChanged }: ReaderProps) {
       readerStyles={readerManager.getTheme(theme)}
       getRendition={(rendition) => {
         readerManager.updateTheme(rendition, theme);
+
+        // Pass the navigateTo function to the parent component
+        onNavigateTo((href: string) => rendition.display(href));
       }}
       showToc={false}
-      tocChanged={(toc) => onTocChanged(toc)}
+      tocChanged={(toc) => onTocChanged(toc)} // Pass TOC data to the parent
     />
   );
 }

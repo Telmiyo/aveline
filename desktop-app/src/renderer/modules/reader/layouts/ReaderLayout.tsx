@@ -9,17 +9,28 @@ interface ReaderLayoutProps {
 
 function ReaderLayout({ fileURL }: ReaderLayoutProps) {
   const [toc, setToc] = useState<any[]>([]);
+  const [navigateTo, setNavigateTo] = useState<(href: string) => void>(() => {
+    console.warn('NavigateTo function not yet available');
+  });
 
   const handleTocChanged = (newToc: any[]) => {
     setToc(newToc);
   };
 
+  const handleNavigateTo = (navigateFn: (href: string) => void) => {
+    setNavigateTo(() => navigateFn);
+  };
+
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      <Reader fileURL={fileURL} onTocChanged={handleTocChanged} />
+      <Reader
+        fileURL={fileURL}
+        onTocChanged={handleTocChanged}
+        onNavigateTo={handleNavigateTo}
+      />
       <div className="absolute bottom-0 w-full h-20 group z-10">
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-          <Toolbox toc={toc} />
+          <Toolbox toc={toc} navigateTo={navigateTo} />
         </div>
       </div>
     </div>
