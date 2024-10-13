@@ -1,6 +1,7 @@
 import { ipcMain, dialog } from 'electron';
 import path from 'path';
 import fs from 'fs';
+import EPub from 'epub2';
 import { getAvelineDataPath, getUserBookList, extractEpubCover } from '../util';
 /**
  * Handles the 'get-library' event to retrieve the list of EPUB books in the user's library.
@@ -21,13 +22,12 @@ ipcMain.handle('get-library', async () => {
     // If directory has content, process the book files
     const fullPaths = dirContent
       .map((file) => path.join(libraryPath, file))
-      .filter((fullPath) => fullPath.includes('.epub'));
+      .filter((fullPath) => fullPath.includes('.json'));
 
-    return getUserBookList(fullPaths);
+    return await getUserBookList(fullPaths);
   } catch (error) {
     // If directory doesn't exist, create it and return an empty array
     await fs.promises.mkdir(libraryPath, { recursive: true });
-    console.info('user library directory created');
     return [];
   }
 });
@@ -55,29 +55,28 @@ ipcMain.on('add-book', async (event, filePath) => {
     // copy epub file into the aveline database
     fs.copyFileSync(filePath, destinationPath);
 
-    // create metadata file for the book
-    const metadata = {
-      title: '',
-      author: '',
-      publicationYear: '',
-      coverImage: extractEpubCover(filePath),
-    };
-    const metadataJson = JSON.stringify(metadata, null, 2);
-    fs.writeFileSync(
-      path.join(libraryPath, `${fileName}.aveline.metadata`),
-      metadataJson,
+    const metadataJson = await EPub.createAsync(destinationPath).then(
+      async (epub: any) => {
+        return {
+          title: epub.metadata.title || fileName,
+          author: epub.metadata.author || 'Unknown Author',
+          cover: await extractEpubCover(destinationPath),
+          filePath: destinationPath,
+        };
+      },
     );
 
-    event.reply('add-book', `File copied to ${destinationPath}`);
-    fs.writeFileSync(destinationPath, `${fileName}.aveline.metadata`);
+    // create metadata file for the book
+    fs.writeFileSync(
+      `${destinationPath}.json`,
+      JSON.stringify(metadataJson, null, 2),
+    );
 
-    event.reply('add-book', `File created at ${destinationPath}`);
+    event.reply('add-book-success', `Book added at ${destinationPath}`);
   } catch (error) {
-    console.error('Error copying file:', error);
     event.reply(
       'add-book-error',
-      `There is an issue proccesign this file. Please try again with another file.`,
+      `There is an issue processing this file. Please try again with another file.`,
     );
-    throw new Error('Error creating file');
   }
 });

@@ -4,6 +4,7 @@ import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
 export type Channels =
   | 'add-book'
+  | 'add-book-success'
   | 'add-book-error'
   | 'get-library'
   | 'open-file-dialog';

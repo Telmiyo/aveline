@@ -90,6 +90,8 @@ export function extractEpubCover(epubFilePath: string): string {
 }
 
 interface UserBookListInterface {
+  title: string;
+  author: string;
   cover: string;
   filePath: string;
 }
@@ -97,17 +99,19 @@ interface UserBookListInterface {
 export async function getUserBookList(
   filePaths: string[],
 ): Promise<UserBookListInterface[]> {
-  const userBookList = await Promise.all(
+  const bookList: UserBookListInterface[] = await Promise.all(
     filePaths.map(async (filePath) => {
-      let cover = await extractEpubCover(filePath);
-      if (!cover) {
-        cover = '';
-      }
-      return { cover, filePath };
+      // Read the file asynchronously
+      const jsonString = await fs.promises.readFile(filePath, 'utf-8');
+
+      // Parse the JSON string into an object
+      const book: UserBookListInterface = JSON.parse(jsonString);
+
+      return book;
     }),
   );
 
-  return userBookList.filter((book) => book.cover);
+  return bookList;
 }
 
 interface userDataPaths {
