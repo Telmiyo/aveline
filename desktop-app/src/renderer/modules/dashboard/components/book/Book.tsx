@@ -50,11 +50,11 @@ export default function Book({ cover, title, filePath }: BookProperties) {
   return (
     <button
       type="button"
-      className="w-44"
+      className="w-32 h-48"
       onClick={() => navigate(`/reader/${encodeURIComponent(filePath)}`)}
     >
       <div
-        className="relative transform w-44 h-72 rounded overflow-hidden shadow-2xl bg-cover bg-center flex items-center justify-cente"
+        className="relative transform w-full h-full rounded overflow-hidden shadow-2xl bg-cover bg-center flex items-center justify-cente"
         style={backgroundStyle}
       >
         <div

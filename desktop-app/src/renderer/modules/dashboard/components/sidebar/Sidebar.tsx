@@ -7,7 +7,6 @@ import {
   CiMaximize1,
   CiMaximize2,
 } from 'react-icons/ci';
-import { PiBooksThin } from 'react-icons/pi';
 import AVELINE_ICON from '../../../../../../assets/icon.svg';
 
 function Sidebar() {
@@ -44,16 +43,6 @@ function Sidebar() {
               onClick={() => navigate('/dashboard/home')}
             >
               <CiHome size={24} />
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              aria-label="library"
-              className="flex items-center justify-center"
-              onClick={() => navigate('/dashboard/library')}
-            >
-              <PiBooksThin size={24} />
             </button>
           </li>
           <li>

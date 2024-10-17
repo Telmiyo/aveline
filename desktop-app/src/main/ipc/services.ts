@@ -17,38 +17,43 @@ let server: Server | null = null;
  * @param {Electron.IpcMainEvent} event - The IPC event triggered by the renderer.
  * @param {string} filePath - The file path of the EPUB to add to the library.
  */
-ipcMain.on('add-book', async (event, filePath) => {
+ipcMain.handle('add-book', async (event, filePath) => {
   const libraryPath = getAvelineDataPath('library');
   const fileName = path.basename(filePath);
   const destinationPath = path.join(libraryPath, fileName);
 
   try {
-    // copy epub file into the aveline database
+    // Copy the EPUB file into the Aveline library
     fs.copyFileSync(filePath, destinationPath);
 
-    const metadataJson = await EPub.createAsync(destinationPath).then(
-      async (epub: any) => {
-        return {
-          title: epub.metadata.title || fileName,
-          author: epub.metadata.author || 'Unknown Author',
-          cover: await extractEpubCover(destinationPath),
-          filePath: destinationPath,
-        };
-      },
-    );
+    // Extract metadata from the EPUB file
+    const epub = await EPub.createAsync(destinationPath);
 
-    // create metadata file for the book
+    const metadataJson = {
+      title: epub.metadata.title || fileName,
+      author: epub.metadata.author || 'Unknown Author',
+      cover: await extractEpubCover(destinationPath),
+      filePath: destinationPath,
+    };
+
+    // Save the metadata as a JSON file alongside the book
     fs.writeFileSync(
       `${destinationPath}.json`,
       JSON.stringify(metadataJson, null, 2),
     );
 
-    event.reply('add-book-success', `Book added at ${destinationPath}`);
+    // Return the metadata on success
+    return {
+      success: true,
+      message: `Book added at ${destinationPath}`,
+      metadata: metadataJson,
+    };
   } catch (error) {
-    event.reply(
-      'add-book-error',
-      `There is an issue processing this file. Please try again with another file.`,
-    );
+    const err = error as Error;
+    return {
+      success: false,
+      message: `There was an issue processing this file: ${err.message}. Please try again with another file.`,
+    };
   }
 });
 
