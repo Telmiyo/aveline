@@ -124,62 +124,72 @@ ipcMain.handle('open-file-dialog', async (): Promise<string[]> => {
 });
 
 /**
- * Starts a local Express server to serve the selected EPUB file.
- * It serves static files from the directory where the EPUB is located.
- *
- * @param {string} filePath - The path of the EPUB file to be served.
- * @returns {Promise<string>} A promise that resolves to the URL of the served EPUB file.
- */
-export const startServer = async (filePath: string): Promise<string> => {
-  if (!server) {
-    const expressApp = express();
-    const staticFilePath = path.dirname(filePath);
-
-    expressApp.use(cors());
-    expressApp.use(express.static(staticFilePath));
-
-    server = expressApp.listen(3000, () => {
-      console.log('File server is running on http://localhost:3000');
-    });
-  }
-
-  // Return the URL to access the EPUB
-  const fileName = path.basename(filePath);
-  return `http://localhost:3000/${fileName}`;
-};
-
-/**
- * Stops the running Express server, if it's running.
- */
-export const stopCurrentServer = (): void => {
-  if (server) {
-    server.close((err) => {
-      if (err) {
-        console.error('Error stopping the server:', err);
-      } else {
-        console.log('Server has been stopped');
-      }
-    });
-
-    server = null;
-  }
-};
-
-/**
  * IPC handler to start the server to serve the EPUB file.
  * The server is started with the file path provided.
  *
  * @param {Electron.IpcMainInvokeEvent} event - The IPC invoke event triggered by the renderer.
  * @param {string} filePath - The file path of the EPUB to serve.
- * @returns {Promise<string>} A promise that resolves to the URL of the served EPUB file.
+ * @returns {Promise<{ success: boolean; url?: string; error?: string }>}
+ * A promise that resolves to an object with the URL of the served EPUB file or an error message.
  */
-ipcMain.handle('start-server', async (event, filePath) => {
-  return startServer(filePath);
+ipcMain.handle('open-book', async (event, filePath) => {
+  try {
+    if (!filePath) {
+      return { success: false, error: 'No file provided.' };
+    }
+
+    if (path.extname(filePath).toLowerCase() !== '.epub') {
+      return {
+        success: false,
+        error: 'The provided file is not an EPUB file.',
+      };
+    }
+
+    if (!server) {
+      const expressApp = express();
+      const staticFilePath = path.dirname(filePath);
+
+      expressApp.use(cors());
+      expressApp.use(express.static(staticFilePath));
+
+      server = expressApp.listen(3000);
+    }
+
+    const fileName = path.basename(filePath);
+    return { success: true, url: `http://localhost:3000/${fileName}` };
+  } catch (error) {
+    return { success: false, error: `Error opening book, please try again.` };
+  }
 });
+
+// TODO: improve how this is handled in main
+export default function stopCurrentServer(): void {
+  // Attempt to close the server
+  if (server && server.listening) {
+    server.close((err) => {
+      if (err) {
+        // MONITORIZATION: send an error message
+      }
+    });
+
+    server = null;
+  }
+}
 
 /**
  * IPC handler to stop the running Express server, if any.
+ * @returns {Promise<{ success: boolean; error?: string }>}
+ * A promise that resolves to an object indicating whether the server was stopped successfully or if an error occurred.
  */
-ipcMain.handle('stop-server', async () => {
-  stopCurrentServer();
+ipcMain.handle('close-book', async () => {
+  try {
+    if (!server) {
+      return { success: false, error: 'No book is opened' };
+    }
+    stopCurrentServer();
+    return { success: true };
+  } catch (error) {
+    // MONITORIZATION: send an error message
+    return { success: false, error: `Unexpected error` };
+  }
 });

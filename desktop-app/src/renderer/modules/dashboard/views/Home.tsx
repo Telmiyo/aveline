@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useFetchLibrary from '../../../hooks/useFetchLibrary';
 import useUploadBook from '../../../hooks/useUploadBook';
 import useToast from '../../../hooks/useToast';
@@ -15,6 +16,8 @@ function Home() {
     useFetchLibrary();
   const { uploadBook, uploadError, uploadSuccess, resetUploadSuccess } =
     useUploadBook();
+  const navigate = useNavigate();
+
   const { isVisible, message, showToast } = useToast();
   const [animationTrigger, setAnimationTrigger] = useState(false);
 
@@ -57,6 +60,37 @@ function Home() {
     }
   }, [animationTrigger]);
 
+  const handleDialogue = async () => {
+    const filePaths =
+      await window.electron.ipcRenderer.invoke('open-file-dialog');
+    return (filePaths as Array<string>) || [];
+  };
+
+  const handleUploadClick = async () => {
+    const filePaths = await handleDialogue();
+    if (filePaths.length > 0) {
+      uploadBook(filePaths);
+    }
+  };
+
+  const handleBookClick = async (filePath: string) => {
+    try {
+      const result = await window.electron.ipcRenderer.invoke(
+        'open-book',
+        filePath,
+      );
+      if (result.success) {
+        navigate(`/reader/${encodeURIComponent(result.url)}`);
+      } else {
+        showToast({ message: result.error });
+      }
+    } catch (error) {
+      showToast({
+        message: 'Unexpected error occurred while opening the book.',
+      });
+    }
+  };
+
   const renderLibraryContent = () => {
     if (loadingLibrary) {
       return (
@@ -86,6 +120,7 @@ function Home() {
                 filePath={book.filePath}
                 uniqueKey={book.uniqueKey}
                 author={book.author}
+                onClick={() => handleBookClick(book.filePath)}
               />
             ))}
           </div>
@@ -93,19 +128,6 @@ function Home() {
       );
     }
     return <p>Add a new book to your library</p>;
-  };
-
-  const handleDialogue = async () => {
-    const filePaths =
-      await window.electron.ipcRenderer.invoke('open-file-dialog');
-    return (filePaths as Array<string>) || [];
-  };
-
-  const handleUploadClick = async () => {
-    const filePaths = await handleDialogue();
-    if (filePaths.length > 0) {
-      uploadBook(filePaths);
-    }
   };
 
   return (

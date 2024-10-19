@@ -8,8 +8,8 @@ export type Channels =
   | 'add-book-error'
   | 'get-library'
   | 'open-file-dialog'
-  | 'start-server'
-  | 'stop-server';
+  | 'open-book'
+  | 'close-book';
 
 const electronHandler = {
   ipcRenderer: {

@@ -1,20 +1,20 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { IBook } from '../../../../../shared/interfaces';
 
 export default function Book({
   cover,
   fallbackCoverColor,
   title,
-  filePath,
-}: IBook) {
-  const navigate = useNavigate();
+  onClick,
+}: IBook & { onClick: () => void }) {
+  // Type definition including onClick
   const [isCoverValid, setIsCoverValid] = useState<boolean>(true);
 
   const backgroundStyle = cover
     ? { backgroundImage: `url(${cover})` }
     : { backgroundColor: fallbackCoverColor };
 
+  // Checks if the cover received is valid or not.
   useEffect(() => {
     if (cover) {
       const img = new Image();
@@ -33,13 +33,9 @@ export default function Book({
   }, [cover]);
 
   return (
-    <button
-      type="button"
-      className="w-32 h-48"
-      onClick={() => navigate(`/reader/${encodeURIComponent(filePath)}`)}
-    >
+    <button type="button" className="w-32 h-48" onClick={onClick}>
       <div
-        className="relative transform w-full h-full rounded overflow-hidden shadow-2xl bg-cover bg-center flex items-center justify-cente"
+        className="relative transform w-full h-full rounded overflow-hidden shadow-2xl bg-cover bg-center flex items-center justify-center"
         style={backgroundStyle}
       >
         <div

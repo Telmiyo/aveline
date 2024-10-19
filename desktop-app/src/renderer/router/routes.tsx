@@ -22,7 +22,7 @@ const routes = [
     ],
   },
   {
-    path: '/reader/:id',
+    path: '/reader/:url',
     element: <Reader />,
   },
 ];
