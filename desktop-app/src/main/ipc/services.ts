@@ -6,6 +6,7 @@ import express from 'express'; // Fix express import
 import { Server } from 'http';
 import cors from 'cors';
 import { getAvelineDataPath, getUserBookList, extractEpubCover } from '../util';
+import { IBook, IUserLibrary } from '../../shared/interfaces';
 
 let server: Server | null = null;
 
@@ -29,10 +30,33 @@ ipcMain.handle('add-book', async (event, filePath) => {
     // Extract metadata from the EPUB file
     const epub = await EPub.createAsync(destinationPath);
 
-    const metadataJson = {
+    const cover = await extractEpubCover(destinationPath);
+
+    const colors = {
+      default: '#D58936',
+      jasper: '#d73a4a',
+      glaucous: '#6a7f8c',
+      bronze: '#D58936',
+      brown: '#A44200',
+      satinSheenGold: '#A59132',
+    } as const;
+
+    // Generate a random color for the book cover if one is not provided
+    const colorValues = Object.values(colors);
+    const randomIndex = Math.floor(Math.random() * colorValues.length);
+    const randomColor = colorValues[randomIndex];
+    const fallbackCoverColor = randomColor;
+
+    // eslint-disable-next-line global-require
+    const { v4: uuidv4 } = require('uuid');
+    const uniqueKey = uuidv4();
+
+    const metadataJson: IBook = {
+      uniqueKey,
       title: epub.metadata.title || fileName,
       author: epub.metadata.author || 'Unknown Author',
-      cover: await extractEpubCover(destinationPath),
+      cover,
+      fallbackCoverColor,
       filePath: destinationPath,
     };
 
@@ -60,17 +84,17 @@ ipcMain.handle('add-book', async (event, filePath) => {
 /**
  * Handles the 'get-library' event to retrieve the list of EPUB books from the user's library.
  *
- * @returns {Promise<IUserBookList[]>} A promise that resolves to an array of file paths for the EPUB books in the library.
+ * @returns {Promise<IUserLibrary>} A promise that resolves to an array of file paths for the EPUB books in the library.
  * If the library directory is empty or does not exist, it returns an empty array.
  */
-ipcMain.handle('get-library', async () => {
+ipcMain.handle('get-library', async (): Promise<IUserLibrary> => {
   const libraryPath = getAvelineDataPath('library');
 
   try {
     const dirContent = await fs.promises.readdir(libraryPath);
 
     if (dirContent.length === 0) {
-      return [];
+      return { books: [], count: 0, totalPages: 0 };
     }
 
     // If directory has content, process the book files
@@ -82,7 +106,7 @@ ipcMain.handle('get-library', async () => {
   } catch (error) {
     // If directory doesn't exist, create it and return an empty array
     await fs.promises.mkdir(libraryPath, { recursive: true });
-    return [];
+    return { books: [], count: 0, totalPages: 0 };
   }
 });
 
@@ -91,7 +115,7 @@ ipcMain.handle('get-library', async () => {
  *
  * @returns {Promise<string[]>} A promise that resolves to an array of file paths for the selected EPUB files.
  */
-ipcMain.handle('open-file-dialog', async () => {
+ipcMain.handle('open-file-dialog', async (): Promise<string[]> => {
   const result = await dialog.showOpenDialog({
     properties: ['openFile', 'multiSelections'],
     filters: [{ name: 'EPUB Files', extensions: ['epub'] }],

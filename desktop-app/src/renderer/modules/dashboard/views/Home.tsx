@@ -71,25 +71,27 @@ function Home() {
       );
     }
 
-    if (library.length > 0) {
+    if (library.count > 0) {
       return (
         <Suspense fallback={<div>Loading books...</div>}>
           <div
             className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-auto gap-y-8 gap-x-4 transition-opacity duration-500 ${animationTrigger ? 'animate-fade' : ''}`}
           >
-            {library.map((book) => (
+            {library.books.map((book) => (
               <Book
+                key={book.uniqueKey}
                 cover={book.cover}
+                fallbackCoverColor={book.fallbackCoverColor}
                 title={book.title}
                 filePath={book.filePath}
-                key={`${book.title} + ${book.author}`}
+                uniqueKey={book.uniqueKey}
+                author={book.author}
               />
             ))}
           </div>
         </Suspense>
       );
     }
-    // if the library is empty
     return <p>Add a new book to your library</p>;
   };
 

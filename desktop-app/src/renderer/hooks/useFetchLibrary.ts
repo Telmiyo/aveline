@@ -1,21 +1,19 @@
 import { useEffect, useState, useCallback } from 'react';
-
-interface IBookProps {
-  title: string;
-  author: string;
-  cover: string;
-  filePath: string;
-}
+import { IUserLibrary } from '../../shared/interfaces';
 
 interface IUseLibraryResponse {
-  library: IBookProps[];
+  library: IUserLibrary;
   loadingLibrary: boolean;
   fetchLibraryError: string | null;
   refreshLibrary: () => void;
 }
 
 function useFetchLibrary(): IUseLibraryResponse {
-  const [library, setLibrary] = useState<IBookProps[]>([]);
+  const [library, setLibrary] = useState<IUserLibrary>({
+    books: [],
+    count: 0,
+    totalPages: 0,
+  });
   const [loadingLibrary, setLoading] = useState<boolean>(true);
   const [fetchLibraryError, setError] = useState<string | null>(null);
 
@@ -27,7 +25,7 @@ function useFetchLibrary(): IUseLibraryResponse {
     window.electron.ipcRenderer
       .invoke('get-library')
       // eslint-disable-next-line promise/always-return
-      .then((list: IBookProps[]) => {
+      .then((list: IUserLibrary) => {
         setLibrary(list);
       })
       .catch((err: Error) => {

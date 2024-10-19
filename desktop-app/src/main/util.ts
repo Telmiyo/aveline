@@ -3,6 +3,7 @@ import { URL } from 'url';
 import { app } from 'electron';
 import path from 'path';
 import fs from 'fs';
+import { IBook, IUserLibrary } from '../shared/interfaces';
 
 export function resolveHtmlPath(htmlFileName: string) {
   if (process.env.NODE_ENV === 'development') {
@@ -89,29 +90,23 @@ export function extractEpubCover(epubFilePath: string): string {
     });
 }
 
-interface IUserBookList {
-  title: string;
-  author: string;
-  cover: string;
-  filePath: string;
-}
-
 export async function getUserBookList(
   filePaths: string[],
-): Promise<IUserBookList[]> {
-  const bookList: IUserBookList[] = await Promise.all(
+): Promise<IUserLibrary> {
+  // get book list
+  const books: IBook[] = await Promise.all(
     filePaths.map(async (filePath) => {
       // Read the file asynchronously
       const jsonString = await fs.promises.readFile(filePath, 'utf-8');
 
       // Parse the JSON string into an object
-      const book: IUserBookList = JSON.parse(jsonString);
+      const book: IBook = JSON.parse(jsonString);
 
       return book;
     }),
   );
-
-  return bookList;
+  // todo: paginate the response
+  return { books, count: books.length, totalPages: 0 };
 }
 
 interface IUserDataPaths {

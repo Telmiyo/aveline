@@ -1,34 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { IBook } from '../../../../../shared/interfaces';
 
-interface BookProperties {
-  cover: string;
-  title: string;
-  filePath: string;
-}
-
-const colors = {
-  default: '#D58936',
-  jasper: '#d73a4a',
-  glaucous: '#6a7f8c',
-  bronze: '#D58936',
-  brown: '#A44200',
-  satinSheenGold: '#A59132',
-} as const;
-
-export default function Book({ cover, title, filePath }: BookProperties) {
+export default function Book({
+  cover,
+  fallbackCoverColor,
+  title,
+  filePath,
+}: IBook) {
   const navigate = useNavigate();
   const [isCoverValid, setIsCoverValid] = useState<boolean>(true);
 
-  const getRandomColor = () => {
-    const colorValues = Object.values(colors);
-    const randomIndex = Math.floor(Math.random() * colorValues.length);
-    return colorValues[randomIndex];
-  };
-
   const backgroundStyle = cover
     ? { backgroundImage: `url(${cover})` }
-    : { backgroundColor: getRandomColor() };
+    : { backgroundColor: fallbackCoverColor };
 
   useEffect(() => {
     if (cover) {
