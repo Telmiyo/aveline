@@ -50,8 +50,7 @@ export default function Toolbox({ toc, navigateTo }: IToolboxProps) {
 
   return (
     <div>
-      Toolbox rendering...
-      <RiDropdownList className="relative" onClick={onToggleToc} />
+      <RiDropdownList size={25} className="relative" onClick={onToggleToc} />
       {isTocOpen && (
         <div className="absolute bottom-[44px] w-80 h-[400px] bg-white border-2 border-gray-300 rounded-md shadow-md overflow-y-scroll">
           {renderTocItems(chapters)}

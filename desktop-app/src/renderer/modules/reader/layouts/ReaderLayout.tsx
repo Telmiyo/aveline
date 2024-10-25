@@ -33,12 +33,9 @@ function ReaderLayout({ fileURL }: ReaderLayoutProps) {
         onNavigateTo={handleNavigateTo}
       />
       <div className="absolute bottom-0 w-full h-20 group z-10">
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+          <CiHome size={25} onClick={() => navigate('/dashboard/home')} />
           <Toolbox toc={toc} navigateTo={navigateTo} />
-          <CiHome
-            className="absolute top-0 left-0"
-            onClick={() => navigate('/dashboard/home')}
-          />
         </div>
       </div>
     </div>

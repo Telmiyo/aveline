@@ -148,6 +148,7 @@ function Home() {
           </div>
           <div>
             <button
+              className="dashboard-button-primary mt-4"
               type="button"
               onClick={handleUploadClick}
               disabled={loadingLibrary}
