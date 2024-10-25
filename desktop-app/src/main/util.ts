@@ -3,7 +3,7 @@ import { URL } from 'url';
 import { app } from 'electron';
 import path from 'path';
 import fs from 'fs';
-import { IBook, IUserLibrary } from '../shared/interfaces';
+import { IBook, IUserLibrary } from '../shared/interfaces/interfaces';
 
 export function resolveHtmlPath(htmlFileName: string) {
   if (process.env.NODE_ENV === 'development') {
@@ -84,8 +84,8 @@ export function extractEpubCover(epubFilePath: string): string {
 
       return base64Image;
     })
-    .catch((err: Error) => {
-      console.error('Error extracting EPUB:', err);
+    .catch(() => {
+      // todo: add metrics for error monitoring
       return null;
     });
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { IUserLibrary } from '../../shared/interfaces';
+import { IUserLibrary } from '../../shared/interfaces/interfaces';
 
 interface IUseLibraryResponse {
   library: IUserLibrary;

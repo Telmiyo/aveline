@@ -7,7 +7,8 @@ import {
   CiMaximize1,
   CiMaximize2,
 } from 'react-icons/ci';
-import AVELINE_ICON from '../../../../../../assets/icon.svg';
+import { PiMoon, PiSun } from 'react-icons/pi';
+import AVELINE_ICON from '../../../../../assets/icon.svg';
 
 function Sidebar() {
   // Initialize state with value from localStorage or default to true
@@ -15,7 +16,10 @@ function Sidebar() {
     const savedState = localStorage.getItem('fullscreen');
     return savedState !== null ? JSON.parse(savedState) : true;
   });
-
+  const [isTheme, setTheme] = useState<boolean>(() => {
+    const savedState = localStorage.getItem('theme');
+    return savedState !== null ? JSON.parse(savedState) : true;
+  });
   const navigate = useNavigate();
   const fadeIn =
     'animate-fade-right animate-once animate-duration-[600ms] animate-ease-in-out';
@@ -24,8 +28,22 @@ function Sidebar() {
     localStorage.setItem('fullscreen', JSON.stringify(isFullscreen));
   }, [isFullscreen]);
 
+  useEffect(() => {
+    localStorage.setItem('theme', JSON.stringify(isTheme));
+  }, [isTheme]);
+
   const toggleSidebar = () => {
     setFullscreen((prevState) => !prevState);
+  };
+
+  const toggleTheme = () => {
+    const html = document.documentElement;
+    if (html.classList.contains('dark')) {
+      html.classList.remove('dark');
+    } else {
+      html.classList.add('dark');
+    }
+    setTheme((prevState) => !prevState);
   };
 
   return (
@@ -63,6 +81,16 @@ function Sidebar() {
               onClick={() => navigate('/dashboard/settings')}
             >
               <CiSettings size={24} />
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              aria-label="theme"
+              className="flex items-center justify-center"
+              onClick={toggleTheme}
+            >
+              {isTheme ? <PiMoon size={24} /> : <PiSun size={24} />}
             </button>
           </li>
         </ul>

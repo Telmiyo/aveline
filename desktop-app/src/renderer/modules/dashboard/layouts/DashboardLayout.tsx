@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import Sidebar from '../components/sidebar/Sidebar';
+import Sidebar from '../../../components/navigation/sidebar/Sidebar';
 
 function DashboardLayout() {
   return (

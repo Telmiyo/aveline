@@ -6,7 +6,7 @@ import express from 'express'; // Fix express import
 import { Server } from 'http';
 import cors from 'cors';
 import { getAvelineDataPath, getUserBookList, extractEpubCover } from '../util';
-import { IBook, IUserLibrary } from '../../shared/interfaces';
+import { IBook, IUserLibrary } from '../../shared/interfaces/interfaces';
 
 let server: Server | null = null;
 

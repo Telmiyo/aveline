@@ -5,9 +5,9 @@ import useUploadBook from '../../../hooks/useUploadBook';
 import useToast from '../../../hooks/useToast';
 import logo from '../../../../../assets/icon.png';
 import '../../../styles/type-animation.css';
-import Toast from '../../../shared/components/Toast';
+import Toast from '../../../components/feedback/toast/Toast';
 
-const Book = lazy(() => import('../components/book/Book'));
+const Book = lazy(() => import('../../../components/grid/book/Book'));
 const quote = `"The silence often of pure innocence persuades when speaking fails."
 — William Shakespeare, The Winter's Tale`;
 

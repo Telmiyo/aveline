@@ -16,11 +16,5 @@
 }
 
 body {
-  overflow: hidden;
-  height: 100vh;
-  width: 100vw;
-  background: #ece8dd;
-  font-family: 'Sailec Light', Georgia, serif;
-  padding: 0;
-  margin: 0;
+  @apply bg-background-light dark:bg-background-dark text-black dark:text-white font-sailec-light;
 }

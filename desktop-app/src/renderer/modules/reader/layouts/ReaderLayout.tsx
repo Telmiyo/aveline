@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { CiHome } from 'react-icons/ci';
 import { useNavigate } from 'react-router-dom';
-import Reader from '../components/reader/Reader';
-import Toolbox from '../components/toolbox/Toolbox';
+import Reader from '../../../features/reading/reader/Reader';
+import Toolbox from '../../../features/reading/toolbox/Toolbox';
 
 interface ReaderLayoutProps {
   // eslint-disable-next-line react/require-default-props
@@ -13,9 +13,9 @@ function ReaderLayout({ fileURL }: ReaderLayoutProps) {
   const navigate = useNavigate();
 
   const [toc, setToc] = useState<any[]>([]);
-  const [navigateTo, setNavigateTo] = useState<(href: string) => void>(() => {
-    console.warn('NavigateTo function not yet available');
-  });
+  const [navigateTo, setNavigateTo] = useState<(href: string) => void>(
+    () => {},
+  );
 
   const handleTocChanged = (newToc: any[]) => {
     setToc(newToc);

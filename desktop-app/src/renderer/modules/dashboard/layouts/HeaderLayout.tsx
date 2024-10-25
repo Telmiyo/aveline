@@ -1,14 +1,17 @@
-import Header from '../components/header/Header';
-import { CiSquarePlus } from 'react-icons/ci';
 import React from 'react';
+import Header from '../../../components/layout/header/Header';
 
-function HeaderLayout({ title, children }: { title: string, children: React.ReactNode }) {
+function HeaderLayout({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <>
       <Header title={title} />
-      <div className="container mt-8">
-        {children}
-      </div>
+      <div className="container mt-8">{children}</div>
     </>
   );
 }

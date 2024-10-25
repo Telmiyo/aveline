@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { IBook } from '../../../../../shared/interfaces';
+import { IBook } from '../../../../shared/interfaces/interfaces';
 
 export default function Book({
   cover,
