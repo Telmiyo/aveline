@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import { CiHome } from 'react-icons/ci';
-import { useNavigate } from 'react-router-dom';
 import Reader from '../../../features/reading/reader/Reader';
 import Toolbox from '../../../features/reading/toolbox/Toolbox';
 
@@ -10,9 +8,9 @@ interface ReaderLayoutProps {
 }
 
 function ReaderLayout({ fileURL }: ReaderLayoutProps) {
-  const navigate = useNavigate();
-
   const [toc, setToc] = useState<any[]>([]);
+  const [isToolboxHovered, setIsToolboxHovered] = useState(false);
+
   const [navigateTo, setNavigateTo] = useState<(href: string) => void>(
     () => {},
   );
@@ -32,10 +30,17 @@ function ReaderLayout({ fileURL }: ReaderLayoutProps) {
         onTocChanged={handleTocChanged}
         onNavigateTo={handleNavigateTo}
       />
-      <div className="absolute bottom-0 w-full h-20 group z-10">
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
-          <CiHome size={25} onClick={() => navigate('/dashboard/home')} />
-          <Toolbox toc={toc} navigateTo={navigateTo} />
+      <div
+        className="absolute bottom-0 w-full h-20 group z-10"
+        onMouseEnter={() => setIsToolboxHovered(true)}
+        onMouseLeave={() => setIsToolboxHovered(false)}
+      >
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <Toolbox
+            isVisible={isToolboxHovered}
+            toc={toc}
+            navigateTo={navigateTo}
+          />
         </div>
       </div>
     </div>
