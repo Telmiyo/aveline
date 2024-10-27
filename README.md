@@ -4,6 +4,6 @@ Aveline aims to be a simple, minimalist ebook reader application, enhanced with 
 
 Development is on its initial state, having periodic updates and feature enhancements.
 
-**preview:**
+**showcase (27-10-24):**
 
-![Aveline Showcase](.github/images/showcase.gif)
+![Aveline Showcase](.github/images/showcase-27-10-24.gif)
