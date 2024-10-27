@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ReaderLayout from './layouts/ReaderLayout';
+import { ReaderProvider } from '../../features/reading/context/ReaderContext';
 
 function Reader() {
   const { url } = useParams<{ url: string }>();
+  // const readerManager = useReaderManager();
 
   useEffect(() => {
     // Cleanup function to stop the server when the component unmounts
@@ -21,7 +23,11 @@ function Reader() {
     );
   }
 
-  return <ReaderLayout fileURL={url} />;
+  return (
+    <ReaderProvider>
+      <ReaderLayout fileURL={url} />
+    </ReaderProvider>
+  );
 }
 
 export default Reader;
