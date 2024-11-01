@@ -55,6 +55,7 @@ ipcMain.handle('add-book', async (event, filePath) => {
       uniqueKey,
       title: epub.metadata.title || fileName,
       author: epub.metadata.author || 'Unknown Author',
+      genre: epub.metadata.subject,
       cover,
       fallbackCoverColor,
       filePath: destinationPath,

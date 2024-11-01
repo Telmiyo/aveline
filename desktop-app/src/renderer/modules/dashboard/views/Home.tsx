@@ -73,7 +73,7 @@ function Home() {
     }
   };
 
-  const handleBookClick = async (filePath: string) => {
+  const openBook = async (filePath: string) => {
     try {
       const result = await window.electron.ipcRenderer.invoke(
         'open-book',
@@ -114,13 +114,14 @@ function Home() {
             {library.books.map((book) => (
               <Book
                 key={book.uniqueKey}
+                uniqueKey={book.uniqueKey}
+                title={book.title}
+                author={book.author}
+                genre={book.genre}
                 cover={book.cover}
                 fallbackCoverColor={book.fallbackCoverColor}
-                title={book.title}
                 filePath={book.filePath}
-                uniqueKey={book.uniqueKey}
-                author={book.author}
-                onClick={() => handleBookClick(book.filePath)}
+                onClick={() => openBook(book.filePath)}
               />
             ))}
           </div>
