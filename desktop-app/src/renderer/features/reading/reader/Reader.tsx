@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ReactReader } from 'react-reader';
+import { ReactReader } from '../../../modules/reader/lib/react-reader/index';
 import { useReaderManager, ITheme } from '../context/ReaderContext';
 import { ITocElement } from '../consts/interfaces';
 
@@ -45,7 +45,6 @@ export default function Reader({ fileURL, onNavigateTo }: ReaderProps) {
         // Pass the navigateTo function to the parent component
         onNavigateTo((href: string) => rendition.display(href));
       }}
-      showToc={false}
       tocChanged={(toc) => {
         readerManager.setTOC(toc as ITocElement[]);
       }}

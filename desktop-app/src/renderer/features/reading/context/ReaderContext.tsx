@@ -5,8 +5,11 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { IReactReaderStyle, ReactReaderStyle } from 'react-reader';
 import { Rendition } from 'epubjs';
+import {
+  IReactReaderStyle,
+  ReactReaderStyle,
+} from '../../../modules/reader/lib/react-reader/index';
 import { ITocElement } from '../consts/interfaces';
 
 export type ITheme = 'light' | 'dark';

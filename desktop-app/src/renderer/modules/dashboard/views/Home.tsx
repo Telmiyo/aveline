@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { RxUpload } from 'react-icons/rx';
 import useFetchLibrary from '../../../hooks/useFetchLibrary';
 import useUploadBook from '../../../hooks/useUploadBook';
 import useToast from '../../../hooks/useToast';
@@ -7,7 +8,6 @@ import logo from '../../../../../assets/icon.png';
 import avatar from '../../../../../assets/avatar.jpeg';
 import '../../../styles/type-animation.css';
 import Toast from '../../../components/feedback/toast/Toast';
-import { RxUpload } from 'react-icons/rx';
 
 const Book = lazy(() => import('../../../components/grid/book/Book'));
 const quote = `"The silence often of pure innocence persuades when speaking fails."
