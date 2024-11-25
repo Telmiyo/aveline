@@ -1,11 +1,11 @@
 import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
-import Reader from '../modules/reader/reader';
+import Reader from '@reader/reader';
 
-const Dashboard = lazy(() => import('../modules/dashboard/dashboard'));
-const Home = lazy(() => import('../modules/dashboard/views/Home'));
-const Bookmarks = lazy(() => import('../modules/dashboard/views/Bookmarks'));
-const Settings = lazy(() => import('../modules/dashboard/views/Settings'));
+const Dashboard = lazy(() => import('@dashboard/dashboard'));
+const Home = lazy(() => import('@dashboard/views/Home'));
+const Bookmarks = lazy(() => import('@dashboard/views/Bookmarks'));
+const Settings = lazy(() => import('@dashboard/views/Settings'));
 
 const routes = [
   {

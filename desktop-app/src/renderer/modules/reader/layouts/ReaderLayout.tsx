@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import Reader from '../../../features/reading/reader/Reader';
-import Toolbox from '../../../features/reading/toolbox/Toolbox';
+import Reader from '../core/reader/Reader';
+import Toolbox from '../core/toolbox/Toolbox';
 
 interface ReaderLayoutProps {
   fileURL: string;

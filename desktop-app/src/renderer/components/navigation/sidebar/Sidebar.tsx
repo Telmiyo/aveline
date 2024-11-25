@@ -8,7 +8,7 @@ import {
   CiMaximize2,
 } from 'react-icons/ci';
 // import { PiMoon, PiSun } from 'react-icons/pi';
-import AVELINE_ICON from '../../../../../assets/icon.svg';
+import AVELINE_ICON from '@assets/icon.svg';
 
 function Sidebar() {
   // Initialize state with value from localStorage or default to true

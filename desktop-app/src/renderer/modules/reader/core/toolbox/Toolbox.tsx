@@ -5,9 +5,9 @@ import {
   PiListBulletsThin,
 } from 'react-icons/pi';
 import { useNavigate } from 'react-router-dom';
+import AVELINE_ICON from '@assets/icon.svg';
 import { ITocElement } from '../consts/interfaces';
 import { useReaderManager } from '../context/ReaderContext';
-import AVELINE_ICON from '../../../../../assets/icon.svg';
 
 interface ToolboxProps {
   isVisible: boolean;

@@ -10,7 +10,7 @@
 
 @font-face {
   font-family: 'Sailec Light';
-  src: url('../../../assets/fonts/sailec-light.ttf') format('truetype');
+  src: url('@assets/fonts/sailec-light.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }

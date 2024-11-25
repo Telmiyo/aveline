@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ReaderLayout from './layouts/ReaderLayout';
-import { ReaderProvider } from '../../features/reading/context/ReaderContext';
+import { ReaderProvider } from './core/context/ReaderContext';
 
 function Reader() {
   const { url } = useParams<{ url: string }>();

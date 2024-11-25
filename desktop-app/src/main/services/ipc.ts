@@ -153,6 +153,7 @@ ipcMain.handle('open-book', async (event, filePath) => {
       expressApp.use(cors());
       expressApp.use(express.static(staticFilePath));
 
+      // TODO: Add callback in case the port is running
       server = expressApp.listen(3000);
     }
 

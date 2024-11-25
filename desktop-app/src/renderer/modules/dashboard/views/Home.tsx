@@ -1,15 +1,13 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RxUpload } from 'react-icons/rx';
-import useFetchLibrary from '../../../hooks/useFetchLibrary';
-import useUploadBook from '../../../hooks/useUploadBook';
-import useToast from '../../../hooks/useToast';
-import logo from '../../../../../assets/icon.png';
-import avatar from '../../../../../assets/avatar.jpeg';
-import '../../../styles/type-animation.css';
-import Toast from '../../../components/feedback/toast/Toast';
+import useFetchLibrary from '@hooks/useFetchLibrary';
+import useUploadBook from '@hooks/useUploadBook';
+import useToast from '@hooks/useToast';
+import logo from '@assets/icon.png';
+import '@styles/type-animation.css';
+import Toast from '@components/feedback/toast/Toast';
 
-const Book = lazy(() => import('../../../components/grid/book/Book'));
+const Book = lazy(() => import('@components/grid/book/Book'));
 const quote = `"The silence often of pure innocence persuades when speaking fails."
 — William Shakespeare, The Winter's Tale`;
 
@@ -136,8 +134,8 @@ function Home() {
   return (
     <div className="w-full h-full flex flex-col">
       {/* Header */}
-      <div className="flex flex-col justify-center items-center mb-8 ">
-        <div className="w-fit flex flex-col items-center ">
+      <div className="flex flex-col justify-center items-center mb-8">
+        <div className="w-fit flex flex-col items-center">
           <img src={logo} alt="logo" className="w-28" />
 
           {/* Typewriting effect on the heading */}
@@ -151,35 +149,23 @@ function Home() {
               {quote}
             </blockquote>
           </div>
-
-          {/* User Card */}
-          <div className="bg-white/20 rounded-lg shadow-md shadow-black/10 backdrop-blur-sm border border-white/30 p-4 w-80 h-28 flex items-center mt-4">
-            <div className="relative flex justify-center items-center">
-              <img
-                src={avatar}
-                alt="user-avatar"
-                className="w-12 h-12 rounded-full"
-              />
-            </div>
-            <span className="ml-4">This is a placeholder user card</span>
-          </div>
         </div>
       </div>
 
       {/* User Library */}
-      <div className="flex items-center justify-center w-full">
+      <div className="flex-grow flex items-center justify-center w-full">
         {renderLibraryContent()}
       </div>
 
       {/* Upload Book  */}
-      <div className="h-full inline-flex justify-center items-center ">
+      <div className="inline-flex justify-center items-center ">
         <button
           className="dashboard-button-primary mt-4 p-2 border-dashed border-2 border-gray-300 rounded-md"
           type="button"
           onClick={handleUploadClick}
           disabled={loadingLibrary}
         >
-          <RxUpload className="inline-flex" />
+          {/* <RxUpload className="inline-flex" /> */}
           Upload Book
         </button>
       </div>

@@ -9,7 +9,7 @@ import { Rendition } from 'epubjs';
 import {
   IReactReaderStyle,
   ReactReaderStyle,
-} from '../../../modules/reader/lib/react-reader/index';
+} from '../../libraries/react-reader/index';
 import { ITocElement } from '../consts/interfaces';
 
 export type ITheme = 'light' | 'dark';
@@ -23,6 +23,8 @@ class ReaderManager {
   private rendition?: Rendition;
 
   private toc: ITocElement[] | null = null;
+
+  private isLayoutVisible: boolean = false;
 
   constructor() {
     this.themes = { ...ReactReaderStyle };
@@ -53,6 +55,10 @@ class ReaderManager {
         }
       }, 100);
     });
+  }
+
+  public toggleLayoutVisibilty() {
+    this.isLayoutVisible = !this.isLayoutVisible;
   }
 
   public async getCurrentChapterID(): Promise<string | undefined> {

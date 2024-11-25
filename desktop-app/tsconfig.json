@@ -12,7 +12,15 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "allowJs": true,
-    "outDir": ".aveline/dll"
+    "outDir": ".aveline/dll",
+    "paths": {
+      "@assets/*": ["./assets/*"],
+      "@components/*": ["./src/renderer/components/*"],
+      "@hooks/*": ["./src/renderer/hooks/*"],
+      "@styles/*": ["./src/renderer/styles/*"],
+      "@dashboard/*": ["./src/renderer/modules/dashboard/*"],
+      "@reader/*": ["./src/renderer/modules/reader/*"]
+    }
   },
   "exclude": ["test", "release/build", "release/app/dist", ".aveline/dll"]
 }

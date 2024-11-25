@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ReactReader } from '../../../modules/reader/lib/react-reader/index';
+import { ReactReader } from '../../libraries/react-reader';
 import { useReaderManager, ITheme } from '../context/ReaderContext';
 import { ITocElement } from '../consts/interfaces';
 
