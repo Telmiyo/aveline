@@ -1,2 +1,5 @@
  # Ignore all .idea directories
  **/.idea/
+ 
+ **/.DS_Store
+

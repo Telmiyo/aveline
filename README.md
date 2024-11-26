@@ -1,6 +1,6 @@
 # Aveline
 
-Aveline aims to be a simple, minimalist ebook reader application, enhanced with AI-powered tools to provide an immersive reading experience.
+Aveline aims to be a simple, minimalist ebook reader application to provide a cool space for digital reading.
 
 Development is on its initial state, having periodic updates and feature enhancements.
 
