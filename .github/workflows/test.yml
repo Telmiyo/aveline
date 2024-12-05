@@ -14,21 +14,21 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v3
 
-      - name: Install Node.js and NPM
+      - name: Install Node.js and Corepack
         uses: actions/setup-node@v3
         with:
-          node-version: 18
-          cache: npm
+          node-version: 20.9.0
 
-      - name: npm install
+      - name: Install dependencies with Yarn
         run: |
-          npm install
+          corepack enable
+          yarn install
 
-      - name: npm test
+      - name: Run tests and linting
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm run package
-          npm run lint
-          npm exec tsc
-          npm test
+          yarn package
+          yarn lint
+          yarn exec tsc
+          yarn test
