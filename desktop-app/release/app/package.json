@@ -1,12 +1,12 @@
 {
   "name": "aveline",
-  "version": "1.0.0",
-  "description": "A workspace for book authors.",
+  "version": "0.1.0-canary",
+  "description": "A minimalist book reader.",
   "license": "MIT",
   "author": {
     "name": "Telmo Beroiz",
     "email": "iamtelmo@proton.me",
-    "url": "https://telmoberoiz.xyz"
+    "url": "https://telmo-beroiz.vercel.app"
   },
   "main": "./dist/main/main.js",
   "scripts": {
