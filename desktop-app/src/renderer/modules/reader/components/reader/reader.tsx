@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ReactReader } from '../../libraries/react-reader';
-import { useReaderManager, ITheme } from '../context/ReaderContext';
-import { ITocElement } from '../consts/interfaces';
+import { useReaderManager, ITheme } from './context/reader-context';
+import { ITocItem } from '../toolbox/consts/toc-item';
 
 interface ReaderProps {
   fileURL: string;
@@ -25,7 +25,7 @@ export default function Reader({ fileURL, onNavigateTo }: ReaderProps) {
     const initializeTOC = async () => {
       if (readerManager.getRendition()) {
         const toc = await readerManager.getTOC();
-        readerManager.setTOC(toc as ITocElement[]);
+        readerManager.setTOC(toc as ITocItem[]);
       }
     };
 
@@ -46,7 +46,7 @@ export default function Reader({ fileURL, onNavigateTo }: ReaderProps) {
         onNavigateTo((href: string) => rendition.display(href));
       }}
       tocChanged={(toc) => {
-        readerManager.setTOC(toc as ITocElement[]);
+        readerManager.setTOC(toc as ITocItem[]);
       }}
     />
   );

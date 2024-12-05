@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { MemoryRouter } from 'react-router-dom';
 
 // utilities
-import AppRouter from './router/AppRouter';
+import AppRouter from './router/app-router';
 
 // styles
 import './styles/tailwind.css';

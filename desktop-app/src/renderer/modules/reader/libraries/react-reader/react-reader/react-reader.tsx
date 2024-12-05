@@ -1,8 +1,8 @@
 /* eslint-disable */
 import React, { PureComponent } from 'react';
 import { NavItem } from 'epubjs';
-import { EpubView, IEpubViewProps } from '../EpubView/EpubView';
-import { IEpubViewStyle } from '../EpubView/style';
+import { EpubView, IEpubViewProps } from '../epub-viewer/epub-view';
+import { IEpubViewStyle } from '../epub-viewer/style';
 import { ReactReaderStyle as defaultStyles, IReactReaderStyle } from './style';
 
 export type IReactReaderProps = IEpubViewProps & {

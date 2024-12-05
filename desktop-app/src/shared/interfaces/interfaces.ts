@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface IBook {
   uniqueKey: string;
   title: string;
@@ -6,6 +8,9 @@ export interface IBook {
   cover: string;
   fallbackCoverColor: string;
   filePath: string;
+  onClick?: (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => void | Promise<void>;
 }
 
 export interface IUserLibrary {

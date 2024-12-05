@@ -1,13 +1,10 @@
 import { useEffect, useState, useCallback } from 'react';
-import {
-  PiArticleThin,
-  PiTextColumnsThin,
-  PiListBulletsThin,
-} from 'react-icons/pi';
+import { PiListBulletsThin } from 'react-icons/pi';
 import { useNavigate } from 'react-router-dom';
 import AVELINE_ICON from '@assets/icon.svg';
-import { ITocElement } from '../consts/interfaces';
-import { useReaderManager } from '../context/ReaderContext';
+import { ITocItem } from './consts/toc-item';
+import { useReaderManager } from '../reader/context/reader-context';
+import ColumnSwitch from './components/column-switcher';
 
 interface ToolboxProps {
   isVisible: boolean;
@@ -16,11 +13,10 @@ interface ToolboxProps {
 
 export default function Toolbox({ isVisible, navigateTo }: ToolboxProps) {
   // table of contents
-  const [chapters, setChapters] = useState<ITocElement[]>([]);
+  const [chapters, setChapters] = useState<ITocItem[]>([]);
   const [currentChapterId, setCurrentChapterId] = useState<string | null>(null);
 
   // settings
-  const [isSinglePage, setIsSinglePage] = useState(false);
   const [isTocOpen, setIsTocOpen] = useState(false);
 
   // utils
@@ -36,10 +32,6 @@ export default function Toolbox({ isVisible, navigateTo }: ToolboxProps) {
     setTimeout(() => {
       updateCurrentChapter();
     }, 100);
-  };
-  const toggleColumns = () => {
-    readerManager.toggleColumns();
-    setIsSinglePage(!isSinglePage);
   };
 
   useEffect(() => {
@@ -61,7 +53,7 @@ export default function Toolbox({ isVisible, navigateTo }: ToolboxProps) {
     }
   }, [isVisible]);
 
-  const renderTocItems = (items: ITocElement[]) => {
+  const renderTocItems = (items: ITocItem[]) => {
     return (
       <div className="overflow-y-scroll overflow-x-hidden">
         {items.map((item) => (
@@ -110,11 +102,7 @@ export default function Toolbox({ isVisible, navigateTo }: ToolboxProps) {
   return (
     <div className="h-full flex items-center justify-center gap-4 cursor-pointer">
       {/* Toggle Columns */}
-      {isSinglePage ? (
-        <PiArticleThin size={25} onClick={toggleColumns} />
-      ) : (
-        <PiTextColumnsThin size={25} onClick={toggleColumns} />
-      )}
+      <ColumnSwitch />
       {/* Home Button */}
       <button
         type="button"

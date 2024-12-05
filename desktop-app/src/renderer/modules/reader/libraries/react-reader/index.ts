@@ -4,7 +4,7 @@
 // - Adding finer control over the reader itself to better suit project requirements.
 // Original library: https://www.npmjs.com/package/react-reader
 
-export * from './EpubView/EpubView';
-export * from './EpubView/style';
-export * from './ReactReader/ReactReader';
-export * from './ReactReader/style';
+export * from './epub-viewer/epub-view';
+export * from './epub-viewer/style';
+export * from './react-reader/react-reader';
+export * from './react-reader/style';

@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { IBook } from '../../../../shared/interfaces/interfaces';
+import { IBook } from '@shared/interfaces/interfaces';
 
-export default function Book({
+export default function BookItem({
   cover,
   fallbackCoverColor,
   title,
   onClick,
-}: IBook & { onClick: () => void }) {
+}: IBook) {
   // Type definition including onClick
   const [isCoverValid, setIsCoverValid] = useState<boolean>(true);
 
@@ -35,7 +35,7 @@ export default function Book({
   return (
     <button type="button" className="w-32 h-48" onClick={onClick}>
       <div
-        className="relative transform w-full h-full rounded overflow-hidden shadow-2xl bg-cover bg-center flex items-center justify-center"
+        className="relative transform w-full h-full rounded overflow-hidden shadow-md bg-cover bg-center flex items-center justify-center"
         style={backgroundStyle}
       >
         <div

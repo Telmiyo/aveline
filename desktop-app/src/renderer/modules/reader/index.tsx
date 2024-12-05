@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import ReaderLayout from './layouts/ReaderLayout';
-import { ReaderProvider } from './core/context/ReaderContext';
+import ReaderLayout from './layouts/reader-layout';
+import { ReaderProvider } from './components/reader/context/reader-context';
 
-function Reader() {
+export default function Reader() {
   const { url } = useParams<{ url: string }>();
   // const readerManager = useReaderManager();
 
   useEffect(() => {
     // Cleanup function to stop the server when the component unmounts
     return () => {
-      window.electron.ipcRenderer.invoke('close-book').catch((error) => {
+      window.electron.ipcRenderer.invoke('close-book').catch((error: Error) => {
         // TODO: Monitor this scenario and handle it appropriately
         console.error('Error closing book on unmount:', error);
       });
@@ -29,5 +29,3 @@ function Reader() {
     </ReaderProvider>
   );
 }
-
-export default Reader;

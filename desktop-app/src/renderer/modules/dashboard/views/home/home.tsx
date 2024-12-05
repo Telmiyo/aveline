@@ -5,13 +5,13 @@ import useUploadBook from '@hooks/useUploadBook';
 import useToast from '@hooks/useToast';
 import logo from '@assets/icon.png';
 import '@styles/type-animation.css';
-import Toast from '@components/feedback/toast/Toast';
+import Toast from '@ui/toast';
 
-const Book = lazy(() => import('@components/grid/book/Book'));
+const BookItem = lazy(() => import('@dashboard/components/book/book-item'));
 const quote = `"The silence often of pure innocence persuades when speaking fails."
 — William Shakespeare, The Winter's Tale`;
 
-function Home() {
+export default function Home() {
   const { library, loadingLibrary, fetchLibraryError, refreshLibrary } =
     useFetchLibrary();
   const { uploadBook, uploadError, uploadSuccess, resetUploadSuccess } =
@@ -112,7 +112,7 @@ function Home() {
             className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-auto gap-y-8 gap-x-4 transition-opacity duration-500 ${animationTrigger ? 'animate-fade' : ''}`}
           >
             {library.books.map((book) => (
-              <Book
+              <BookItem
                 key={book.uniqueKey}
                 uniqueKey={book.uniqueKey}
                 title={book.title}
@@ -175,5 +175,3 @@ function Home() {
     </div>
   );
 }
-
-export default Home;

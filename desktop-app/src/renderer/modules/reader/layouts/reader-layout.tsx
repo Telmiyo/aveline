@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import Reader from '../core/reader/Reader';
-import Toolbox from '../core/toolbox/Toolbox';
+import Reader from '@reader/components/reader/reader';
+import Toolbox from '@reader/components/toolbox/toolbox';
 
 interface ReaderLayoutProps {
   fileURL: string;
 }
 
-function ReaderLayout({ fileURL }: ReaderLayoutProps) {
+export default function ReaderLayout({ fileURL }: ReaderLayoutProps) {
   const [isToolboxHovered, setIsToolboxHovered] = useState(false);
 
   const [navigateTo, setNavigateTo] = useState<(href: string) => void>(
@@ -32,5 +32,3 @@ function ReaderLayout({ fileURL }: ReaderLayoutProps) {
     </div>
   );
 }
-
-export default ReaderLayout;

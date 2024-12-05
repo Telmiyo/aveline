@@ -1,4 +1,4 @@
-/* eslint-disable compat/compat */
+/* eslint-disable */
 import {
   createContext,
   ReactNode,
@@ -10,8 +10,8 @@ import { Rendition } from 'epubjs';
 import {
   IReactReaderStyle,
   ReactReaderStyle,
-} from '../../libraries/react-reader/index';
-import { ITocElement } from '../consts/interfaces';
+} from '../../../libraries/react-reader/index';
+import { ITocItem } from '../../toolbox/consts/toc-item';
 
 export type ITheme = 'light' | 'dark';
 
@@ -23,7 +23,7 @@ class ReaderManager {
 
   private rendition?: Rendition;
 
-  private toc: ITocElement[] | null = null;
+  private toc: ITocItem[] | null = null;
 
   private isLayoutVisible: boolean = false;
 
@@ -39,11 +39,11 @@ class ReaderManager {
     return this.rendition;
   }
 
-  public setTOC(toc: ITocElement[]): void {
+  public setTOC(toc: ITocItem[]): void {
     this.toc = toc;
   }
 
-  public async getTOC(): Promise<ITocElement[]> {
+  public async getTOC(): Promise<ITocItem[]> {
     if (this.toc) {
       return this.toc;
     }
@@ -65,7 +65,7 @@ class ReaderManager {
   public async getCurrentChapterID(): Promise<string | undefined> {
     return new Promise((resolve) => {
       const findChapterInToc = (
-        toc: ITocElement[],
+        toc: ITocItem[],
         href: string,
       ): string | undefined => {
         // eslint-disable-next-line no-restricted-syntax
@@ -104,6 +104,10 @@ class ReaderManager {
     this.isTwoColumns = !this.isTwoColumns;
     const spread = this.isTwoColumns ? 'auto' : 'none';
     this.rendition?.spread(spread);
+  }
+
+  public getColumnsMode(): boolean {
+    return this.isTwoColumns;
   }
 
   public updateTheme(theme: ITheme): void {

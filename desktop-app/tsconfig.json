@@ -15,8 +15,9 @@
     "outDir": ".aveline/dll",
     "paths": {
       "@aveline/*": ["./*"],
+      "@shared/*": ["./src/shared/*"],
       "@assets/*": ["./assets/*"],
-      "@components/*": ["./src/renderer/components/*"],
+      "@ui/*": ["./src/renderer/ui/*"],
       "@hooks/*": ["./src/renderer/hooks/*"],
       "@styles/*": ["./src/renderer/styles/*"],
       "@dashboard/*": ["./src/renderer/modules/dashboard/*"],

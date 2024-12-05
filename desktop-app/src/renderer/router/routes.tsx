@@ -1,11 +1,11 @@
 import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
-import Reader from '@reader/reader';
+import Reader from '@aveline/src/renderer/modules/reader';
 
-const Dashboard = lazy(() => import('@dashboard/dashboard'));
-const Home = lazy(() => import('@dashboard/views/Home'));
-const Bookmarks = lazy(() => import('@dashboard/views/Bookmarks'));
-const Settings = lazy(() => import('@dashboard/views/Settings'));
+const Dashboard = lazy(() => import('@dashboard/index'));
+const Home = lazy(() => import('@dashboard/views/home/home'));
+const Bookmarks = lazy(() => import('@dashboard/views/bookmarks/bookmarks'));
+const Settings = lazy(() => import('@dashboard/views/settings/settings'));
 
 const routes = [
   {

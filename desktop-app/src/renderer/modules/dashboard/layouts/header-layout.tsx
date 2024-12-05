@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from '@components/layout/header/Header';
 
 function HeaderLayout({
   title,
@@ -10,7 +9,7 @@ function HeaderLayout({
 }) {
   return (
     <>
-      <Header title={title} />
+      <h1 className="text-2xl underline underline-offset-4">{title}</h1>;
       <div className="container mt-8">{children}</div>
     </>
   );
