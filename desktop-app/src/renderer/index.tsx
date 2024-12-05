@@ -8,7 +8,7 @@ import AppRouter from './router/AppRouter';
 // styles
 import './styles/tailwind.css';
 
-function App() {
+export default function App() {
   return (
     <MemoryRouter>
       <AppRouter />

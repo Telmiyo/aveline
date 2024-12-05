@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { PureComponent } from 'react';
 import { NavItem } from 'epubjs';
 import { EpubView, IEpubViewProps } from '../EpubView/EpubView';

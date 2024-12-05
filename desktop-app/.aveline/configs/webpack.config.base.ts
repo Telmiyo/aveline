@@ -1,7 +1,7 @@
 /**
  * Base webpack config used across other specific configs
  */
-
+/* eslint-disable import/no-relative-packages */
 import webpack from 'webpack';
 import TsconfigPathsPlugins from 'tsconfig-paths-webpack-plugin';
 import webpackPaths from './webpack.paths';

@@ -1,4 +1,5 @@
 /* eslint-disable promise/catch-or-return */
+/* eslint-disable compat/compat */
 import { useState, useCallback } from 'react';
 
 interface IUploadBookResponse {

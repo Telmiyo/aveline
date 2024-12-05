@@ -1,4 +1,5 @@
 /* eslint import/prefer-default-export: off */
+/* eslint-disable compat/compat */
 import { URL } from 'url';
 import { app } from 'electron';
 import path from 'path';

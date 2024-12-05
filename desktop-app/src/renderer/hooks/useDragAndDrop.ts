@@ -9,7 +9,6 @@ const useDragAndDrop = (callbacks: {
 
   const handleDragEnter = useCallback(
     (event: DragEvent) => {
-      console.info('Drag detected...');
       event.preventDefault();
       event.stopPropagation();
       setIsDragging(true);
@@ -20,7 +19,6 @@ const useDragAndDrop = (callbacks: {
 
   const handleDragLeave = useCallback(
     (event: DragEvent) => {
-      console.info('Drag leaving...');
       event.preventDefault();
       event.stopPropagation();
       setIsDragging(false);
@@ -31,7 +29,6 @@ const useDragAndDrop = (callbacks: {
 
   const handleDrop = useCallback(
     (event: DragEvent) => {
-      console.info('Drop being detected...');
       event.preventDefault();
       event.stopPropagation();
       setIsDragging(false);

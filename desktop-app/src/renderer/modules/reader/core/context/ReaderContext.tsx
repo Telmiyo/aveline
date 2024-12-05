@@ -1,3 +1,4 @@
+/* eslint-disable compat/compat */
 import {
   createContext,
   ReactNode,
